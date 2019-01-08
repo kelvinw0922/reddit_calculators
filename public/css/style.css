@@ -1,0 +1,34 @@
+.spinner {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+main.bg-color {
+  background-color: grey;
+}
+
+.brand-logo {
+  font-weight: 500;
+}
+
+.title-color {
+  color: white;
+  font-weight: bold;
+}
+
+.default-title {
+  font-weight: 500;
+  color: black;
+}

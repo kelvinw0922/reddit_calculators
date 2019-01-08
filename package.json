@@ -1,0 +1,18 @@
+{
+  "name": "reddit_calculator",
+  "version": "1.0.0",
+  "description": "Retrieve any topics regarding of calculators",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Kelvin Wong",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "mongoose": "^5.4.2",
+    "nodemon": "^1.18.9"
+  }
+}
