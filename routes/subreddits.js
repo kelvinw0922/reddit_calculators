@@ -6,12 +6,12 @@ const path = require("path");
 // Subreddits Page
 
 // Calculator
-router.get("/calculator", (req, res) => {
+router.get("/calculators", (req, res) => {
   subredditName = path.basename(req.route.path);
   res.render("subreddits/subreddit", {
     ssd: true,
     subreddit: subredditName,
-    title: "Solid State Drives (SSD)"
+    title: "r/Calculator"
   });
 });
 
