@@ -7,67 +7,25 @@ const path = require("path");
 
 // Calculator
 router.get("/calculator", (req, res) => {
-  productName = path.basename(req.route.path);
-  res.render("deals/product", {
+  subredditName = path.basename(req.route.path);
+  res.render("subreddits/subreddit", {
     ssd: true,
-    product: productName,
+    subreddit: subredditName,
     title: "Solid State Drives (SSD)"
   });
 });
 
 // GraphingCalculator
-router.get("/hdd", (req, res) => {
-  productName = path.basename(req.route.path);
-  res.render("deals/product", {
-    hdd: true,
-    product: productName,
-    title: "Hard Drives (HDD)"
-  });
-});
 
 // LearnMath
-router.get("/monitor", (req, res) => {
-  productName = path.basename(req.route.path);
-  res.render("deals/product", {
-    monitor: true,
-    product: productName,
-    title: "Monitors"
-  });
-});
 
 // Math
-router.get("/math", (req, res) => {
-  productName = path.basename(req.route.path);
-  res.render("deals/product", {
-    mouse: true,
-    product: productName,
-    title: "Mouse"
-  });
-});
 
 // MathEducation
-router.get("/gpu", (req, res) => {
-  productName = path.basename(req.route.path);
-  res.render("deals/product", {
-    gpu: true,
-    product: productName,
-    title: "Graphic Processing Unit (GPU)"
-  });
-});
 
-// CPU
-router.get("/cpu", (req, res) => {
-  productName = path.basename(req.route.path);
-  res.render("deals/product", {
-    cpu: true,
-    product: productName,
-    title: "Central Processing Unit (CPU)"
-  });
-});
-
-// AJAX GET Request of each deals' pages
-router.get("/result/:product", (req, res) => {
-  search(req.params.product, "new").then(results => {
+// AJAX GET Request of each subreddit
+router.get("/result/:subreddit", (req, res) => {
+  search(req.params.subreddit, "new").then(results => {
     res.send(results);
   });
 });
