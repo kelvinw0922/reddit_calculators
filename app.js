@@ -22,11 +22,9 @@ app.set("view engine", "handlebars");
 app.get('/', (req, res) => res.redirect('/calculators'));
 
 // Load Routes
-//const index = require("./routes/index");
 const subreddits = require('./routes/subreddits');
 
 // Routes
-//app.use("/", index);
 app.use('/', subreddits)
 
 // Set Static Folder
