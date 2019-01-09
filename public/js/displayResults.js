@@ -24,48 +24,62 @@ function displayResult(data, subreddit) {
   // Remove the Spinner
   $(".spinner").remove();
 
-  for (let i = 0; i < data.length; i++) {
+  // Check if there is any data
+  if (data.length === 0) {
+    let errorNotFound = `
+      <div class="notFound">
+        <img src="/img/oops-nothing-found-here.jpg" style="display: block; margin: 0 auto;">
+      </div>
+    `
+    resultDiv.insertAdjacentHTML("beforeend", errorNotFound);
+  }
+  else {
+    for (let i = 0; i < data.length; i++) {
 
-    let thumbnail = null;
+      let thumbnail = null;
 
-    // Check if thumbnail is available. If yes, display it. If no, parse the title to see if there's any major brand or calculator. If yes, display the icon. If no, display          default picture.
-    //thumbnail = helperFn.parseThumbnail(data[i].title);
+      // Check if thumbnail is available. If yes, display it. If no, parse the title to see if there's any major brand or calculator. If yes, display the icon. If no, display          default picture.
+      thumbnail = helperFn.parseThumbnail(data[i].title, data[i].thumbnail);
 
-    // Write Each Post in HTML Format as a String
-    var newPost = `
+      // Write Each Post in HTML Format as a String
+      var newPost = `
     <div class="col s12 m12 l12 xl12">
         <div class="card horizontal">
             <div class="card-image">
-                <a href="${data[i].url}" target="_blank">${data[i].thumbnail}</a>
+                <a href="${data[i].url}" target="_blank">${thumbnail}</a>
             </div>
             <div class="card-stacked">
                 <div class="card-content">
                 <h5><a href="${directToReadMore(
-      data[i]
-    )}" target="_blank" class="default-title">${data[i].title}</a></h5>
+        data[i]
+      )}" target="_blank" class="default-title">${data[i].title}</a></h5>
     <p>${data[i].selftext}</p>
                 </div>
                 <div class="card-action">
                   <span class="badge">Score: ${data[i].score}</span>
                   <span class="left badge">${getSubmissionTime(
-      data[i].created_utc
-    )} by ${data[i].author}</span>
+        data[i].created_utc
+      )} by ${data[i].author}</span>
                 </div>
             </div>
         </div>
     </div>
   `;
 
-    // Append each post to the result class's div
-    resultDiv.insertAdjacentHTML("beforeend", newPost);
+      // Append each post to the result class's div
+      resultDiv.insertAdjacentHTML("beforeend", newPost);
+    }
   }
+
 }
 
+// Redirecting the correct URL to the thread
 function directToReadMore(post) {
   let newURL = "http://www.reddit.com" + post.permalink;
   return newURL;
 }
 
+// Check thread published time
 function diff_hours(dt1) {
   var now_date = new Date(Date.now());
   var post_date = new Date(dt1 * 1000);

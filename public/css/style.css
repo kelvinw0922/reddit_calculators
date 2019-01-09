@@ -27,3 +27,14 @@ main.bg-color {
   font-weight: 500;
   color: black;
 }
+
+.thumbnail {
+  height: 200px !important;
+  width: 200px !important;
+  padding: 1rem !important;
+  margin: auto !important;
+}
+
+.notFound {
+  margin-bottom: 50px;
+}
