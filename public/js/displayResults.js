@@ -1,4 +1,5 @@
 import helperFn from './parseThumbnail.js';
+import truncate from './truncate.js';
 
 $(function () {
 
@@ -36,10 +37,15 @@ function displayResult(data, subreddit) {
   else {
     for (let i = 0; i < data.length; i++) {
 
-      let thumbnail = null;
+      let thumbnail = null; let selftext = null;
 
       // Check if thumbnail is available. If yes, display it. If no, parse the title to see if there's any major brand or calculator. If yes, display the icon. If no, display          default picture.
       thumbnail = helperFn.parseThumbnail(data[i].title, data[i].thumbnail);
+
+      // Truncate the selftext if it is too long
+      if (data[i].selftext) {
+        selftext = truncate.truncate(data[i].selftext, 450);
+      }
 
       // Write Each Post in HTML Format as a String
       var newPost = `
@@ -53,7 +59,7 @@ function displayResult(data, subreddit) {
                 <h5><a href="${directToReadMore(
         data[i]
       )}" target="_blank" class="default-title">${data[i].title}</a></h5>
-    <p>${data[i].selftext}</p>
+    <p>${selftext ? selftext : ""}</p>
                 </div>
                 <div class="card-action">
                   <span class="badge">Score: ${data[i].score}</span>

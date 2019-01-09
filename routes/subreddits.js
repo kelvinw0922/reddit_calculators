@@ -3,7 +3,7 @@ const router = express.Router();
 const { search, calculator_search } = require("../public/js/redditapi");
 const path = require("path");
 
-// Subreddits Page
+// Subreddits Pages
 
 // Calculator
 router.get("/calculators", (req, res) => {
