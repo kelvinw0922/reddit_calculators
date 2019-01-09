@@ -1,15 +1,18 @@
+import helperFn from './parseThumbnail.js';
+
 $(function () {
 
   // Retrieve Subreddit's name
   let subreddit = window.location.pathname.split('/').pop();
-  // Initialize a variable for storing the JSON data from AJAX
-  let subreddit_data;
 
   // Check if subreddit is within the range of subreddits we actively look for
-  if (subreddit === 'calculators') {
+  if (subreddit === 'calculators' || subreddit === 'GraphingCalculator' || subreddit === 'learnmath' || subreddit === 'math' || subreddit === 'matheducation') {
+    // Send an AJAX request to the backend, redditapi, to query data
     $.get(`result/${subreddit}`, function (data) {
       console.log(data);
+      // Initialize a variable for storing the JSON data from AJAX
       let subreddit_data = data;
+      // Display the result to the frontend
       displayResult(subreddit_data, subreddit);
     });
   }
@@ -22,6 +25,11 @@ function displayResult(data, subreddit) {
   $(".spinner").remove();
 
   for (let i = 0; i < data.length; i++) {
+
+    let thumbnail = null;
+
+    // Check if thumbnail is available. If yes, display it. If no, parse the title to see if there's any major brand or calculator. If yes, display the icon. If no, display          default picture.
+    //thumbnail = helperFn.parseThumbnail(data[i].title);
 
     // Write Each Post in HTML Format as a String
     var newPost = `

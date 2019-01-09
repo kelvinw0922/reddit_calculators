@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { search } = require("../public/js/redditapi");
+const { search, calculator_search } = require("../public/js/redditapi");
 const path = require("path");
 
 // Subreddits Page
@@ -16,18 +16,58 @@ router.get("/calculators", (req, res) => {
 });
 
 // GraphingCalculator
+router.get("/GraphingCalculator", (req, res) => {
+  subredditName = path.basename(req.route.path);
+  res.render("subreddits/subreddit", {
+    GraphingCalculator: true,
+    subreddit: subredditName,
+    title: "r/GraphingCalculator"
+  });
+});
 
 // LearnMath
+router.get("/learnmath", (req, res) => {
+  subredditName = path.basename(req.route.path);
+  res.render("subreddits/subreddit", {
+    learnmath: true,
+    subreddit: subredditName,
+    title: "r/learnmath"
+  });
+});
 
 // Math
+router.get("/math", (req, res) => {
+  subredditName = path.basename(req.route.path);
+  res.render("subreddits/subreddit", {
+    math: true,
+    subreddit: subredditName,
+    title: "r/math"
+  });
+});
 
 // MathEducation
+router.get("/matheducation", (req, res) => {
+  subredditName = path.basename(req.route.path);
+  res.render("subreddits/subreddit", {
+    matheducation: true,
+    subreddit: subredditName,
+    title: "r/matheducation"
+  });
+});
 
 // AJAX GET Request of each subreddit
 router.get("/result/:subreddit", (req, res) => {
-  search(req.params.subreddit, "hot").then(results => {
-    res.send(results);
-  });
+  if (req.params.subreddit === 'calculators' || req.params.subreddit === 'GraphingCalculator') {
+    search(req.params.subreddit).then(results => {
+      res.send(results);
+    });
+  }
+  else {
+    calculator_search(req.params.subreddit).then(results => {
+      res.send(results);
+    });
+  }
+
 });
 
 module.exports = router;
