@@ -18,13 +18,16 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+// Set default page to r/Calculators
+app.get('/', (req, res) => res.redirect('/calculators'));
+
 // Load Routes
-const index = require("./routes/index");
+//const index = require("./routes/index");
 const subreddits = require('./routes/subreddits');
 
 // Routes
-app.use("/", index);
-app.use('/subreddits', subreddits)
+//app.use("/", index);
+app.use('/', subreddits)
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, "public")));

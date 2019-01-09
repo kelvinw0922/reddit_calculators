@@ -1,18 +1,22 @@
 $(function () {
 
+  // Retrieve Subreddit's name
   let subreddit = window.location.pathname.split('/').pop();
+  // Initialize a variable for storing the JSON data from AJAX
+  let subreddit_data;
 
-  if (subreddit === '') {
-    $.get(`results`, function (data) {
-      let result = data;
-      console.log(result);
-      displayResult(data);
+  // Check if subreddit is within the range of subreddits we actively look for
+  if (subreddit === 'calculators') {
+    $.get(`result/${subreddit}`, function (data) {
+      console.log(data);
+      let subreddit_data = data;
+      displayResult(subreddit_data, subreddit);
     });
   }
 })
 
-function displayResult(data) {
-  var resultDiv = document.getElementById('result');
+function displayResult(data, subreddit) {
+  var resultDiv = document.getElementById(subreddit);
 
   // Remove the Spinner
   $(".spinner").remove();
