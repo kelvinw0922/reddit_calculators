@@ -9,7 +9,7 @@ const path = require("path");
 router.get("/calculators", (req, res) => {
   subredditName = path.basename(req.route.path);
   res.render("subreddits/subreddit", {
-    ssd: true,
+    calculators: true,
     subreddit: subredditName,
     title: "r/Calculator"
   });
@@ -25,7 +25,7 @@ router.get("/calculators", (req, res) => {
 
 // AJAX GET Request of each subreddit
 router.get("/result/:subreddit", (req, res) => {
-  search(req.params.subreddit, "new").then(results => {
+  search(req.params.subreddit, "hot").then(results => {
     res.send(results);
   });
 });

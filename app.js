@@ -20,9 +20,11 @@ app.set("view engine", "handlebars");
 
 // Load Routes
 const index = require("./routes/index");
+const subreddits = require('./routes/subreddits');
 
 // Routes
 app.use("/", index);
+app.use('/subreddits', subreddits)
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, "public")));
