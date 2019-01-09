@@ -20,6 +20,8 @@ function parseBrandName(title) {
     "casio",
     "Casio",
     "TI",
+    "ti30",
+    "ti 30",
     "ti83",
     "ti 83",
     "ti84",
@@ -48,6 +50,8 @@ function parseBrandName(title) {
       break;
     case "TI":
     case "Ti":
+    case "ti30":
+    case "ti 30":
     case "ti83":
     case "ti 83":
     case "ti84":
