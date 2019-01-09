@@ -43,6 +43,7 @@ function displayResult(data, subreddit) {
                 <h5><a href="${directToReadMore(
       data[i]
     )}" target="_blank" class="default-title">${data[i].title}</a></h5>
+    <p>${data[i].selftext}</p>
                 </div>
                 <div class="card-action">
                   <span class="badge">Score: ${data[i].score}</span>
