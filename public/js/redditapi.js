@@ -44,5 +44,31 @@ module.exports = {
     else {
       return status(404).json({ error: "Wrong sorting keyword" });
     }
+  },
+  // Searching all subreddits in our defaultlist
+  all_search: function (list, sortBy) {
+    if (sortBy === 'new') {
+      let urls = [];
+      for (let i = 0; i < list.length; i++) {
+        urls.push(`https://www.reddit.com/r/${list[i]}/new/.json?sort=new&t=week&limit=20`);
+      }
+      return Promise.all(urls.map(fetch)).then(responses =>
+        Promise.all(responses.map(res => res.json())
+        ).then(data => data))
+        .catch(err => console.log(err));
+    }
+    else if (sortBy === 'top') {
+      let data = {}
+      data = topAllSubs(list);
+      return data;
+    }
+    else {
+      return status(404).json({ error: "all_search function cannot use the current sorting keywork" });
+    }
   }
 };
+
+// Combined all subreddits query with the TOP sortBy
+function topAllSubs(list) {
+
+}

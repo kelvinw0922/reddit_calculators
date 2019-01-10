@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { search, calculator_search } = require("../public/js/redditapi");
+const { search, calculator_search, all_search } = require("../public/js/redditapi");
 const path = require("path");
 
 // Subreddits Pages
@@ -14,6 +14,7 @@ const subredditsList = [
 
 // All
 router.get("/all", (req, res) => {
+  subredditName = path.basename(req.route.path);
   res.render("subreddits/subreddit", {
     all: true,
     subreddit: subredditName,
@@ -75,6 +76,11 @@ router.get("/matheducation", (req, res) => {
 router.get("/result/:subreddit/:sortBy", (req, res) => {
   if (req.params.subreddit === 'calculators' || req.params.subreddit === 'GraphingCalculator') {
     search(req.params.subreddit, req.params.sortBy).then(results => {
+      res.send(results);
+    });
+  }
+  else if (req.params.subreddit === 'all') {
+    all_search(subredditsList, req.params.sortBy).then(results => {
       res.send(results);
     });
   }

@@ -7,13 +7,27 @@ export default {
     let subreddit = window.location.pathname.split('/').pop();
 
     // Check if subreddit is within the range of subreddits we actively look for
-    if (subreddit === 'calculators' || subreddit === 'GraphingCalculator' || subreddit === 'learnmath' || subreddit === 'math' || subreddit === 'matheducation') {
+    if (subreddit === 'all' || subreddit === 'calculators' || subreddit === 'GraphingCalculator' || subreddit === 'learnmath' || subreddit === 'math' || subreddit === 'matheducation') {
       // Send an AJAX request to the backend, redditapi, to query data
       $.get(`result/${subreddit}/${sortBy}`, function (data) {
-        console.log(data);
-        // Initialize a variable for storing the JSON data from AJAX
-        let subreddit_data = data;
-        // Display the result to the frontend
+        // Organize data if it's all subreddit
+        let subreddit_data = [];
+        if (subreddit === 'all') {
+          for (let i = 0; i < data.length; i++) {
+            var temp = data[i].data.children.map(post_thread => post_thread.data);
+            subreddit_data = subreddit_data.concat(temp);
+          }
+          // Sort the array
+          if (sortBy === 'new') {
+
+          }
+        }
+        else {
+          // Initialize a variable for storing the JSON data from AJAX
+          subreddit_data = data;
+        }
+        console.log(subreddit_data);
+        // // Display the result to the frontend
         displayResult(subreddit_data, subreddit, sortBy);
       });
     }
