@@ -9,6 +9,9 @@ $('#new').click(function () {
   if (!resultDiv.classList.contains('new')) {
     reddit.queryReddit('new');
   }
+  // Change the button to top
+  let sortingButton = document.getElementById('sort-btn');
+  sortingButton.innerHTML = 'fiber_new';
 })
 
 $('#top').click(function () {
@@ -20,4 +23,7 @@ $('#top').click(function () {
   if (!resultDiv.classList.contains('top')) {
     reddit.queryReddit('top');
   }
+  // Change the button to new
+  let sortingButton = document.getElementById('sort-btn');
+  sortingButton.innerHTML = 'favorite';
 })

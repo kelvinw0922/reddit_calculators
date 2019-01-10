@@ -19,10 +19,13 @@ export default {
           }
           // Sort the array
           if (sortBy === 'new') {
-            // let temp = new Date(subreddit_data[0].created_utc * 1000);
-            // console.log(temp);
             subreddit_data = subreddit_data.sort(function (a, b) {
               return new Date(b.created_utc * 1000) - new Date(a.created_utc * 1000);
+            })
+          }
+          else if (sortBy === 'top') {
+            subreddit_data = subreddit_data.sort(function (a, b) {
+              return b.score - a.score;
             })
           }
         }

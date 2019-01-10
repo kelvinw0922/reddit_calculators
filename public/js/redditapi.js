@@ -63,9 +63,19 @@ module.exports = {
         .catch(err => console.log(err));
     }
     else if (sortBy === 'top') {
-      let data = {}
-      data = topAllSubs(list);
-      return data;
+      let urls = [];
+      for (let i = 0; i < list.length; i++) {
+        if (list[i] === 'calculators' || list[i] === 'GraphingCalculator') {
+          urls.push(`https://www.reddit.com/r/${list[i]}/top/.json?sort=top&t=week&limit=20`);
+        }
+        else {
+          urls.push(`https://www.reddit.com/r/${list[i]}/search.json?q=calculator&sort=top&restrict_sr=on&limit=50&t=month`);
+        }
+      }
+      return Promise.all(urls.map(fetch)).then(responses =>
+        Promise.all(responses.map(res => res.json())
+        ).then(data => data))
+        .catch(err => console.log(err));
     }
     else {
       return status(404).json({ error: "all_search function cannot use the current sorting keywork" });
