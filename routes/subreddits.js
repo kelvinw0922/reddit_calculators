@@ -56,14 +56,14 @@ router.get("/matheducation", (req, res) => {
 });
 
 // AJAX GET Request of each subreddit
-router.get("/result/:subreddit", (req, res) => {
+router.get("/result/:subreddit/:sortBy", (req, res) => {
   if (req.params.subreddit === 'calculators' || req.params.subreddit === 'GraphingCalculator') {
-    search(req.params.subreddit).then(results => {
+    search(req.params.subreddit, req.params.sortBy).then(results => {
       res.send(results);
     });
   }
   else {
-    calculator_search(req.params.subreddit).then(results => {
+    calculator_search(req.params.subreddit, req.params.sortBy).then(results => {
       res.send(results);
     });
   }

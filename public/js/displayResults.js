@@ -1,26 +1,31 @@
 import helperFn from './parseThumbnail.js';
 import truncate from './truncate.js';
 
-$(function () {
+export default {
+  queryReddit: function (sortBy) {
+    // Retrieve Subreddit's name
+    let subreddit = window.location.pathname.split('/').pop();
 
-  // Retrieve Subreddit's name
-  let subreddit = window.location.pathname.split('/').pop();
-
-  // Check if subreddit is within the range of subreddits we actively look for
-  if (subreddit === 'calculators' || subreddit === 'GraphingCalculator' || subreddit === 'learnmath' || subreddit === 'math' || subreddit === 'matheducation') {
-    // Send an AJAX request to the backend, redditapi, to query data
-    $.get(`result/${subreddit}`, function (data) {
-      console.log(data);
-      // Initialize a variable for storing the JSON data from AJAX
-      let subreddit_data = data;
-      // Display the result to the frontend
-      displayResult(subreddit_data, subreddit);
-    });
+    // Check if subreddit is within the range of subreddits we actively look for
+    if (subreddit === 'calculators' || subreddit === 'GraphingCalculator' || subreddit === 'learnmath' || subreddit === 'math' || subreddit === 'matheducation') {
+      // Send an AJAX request to the backend, redditapi, to query data
+      $.get(`result/${subreddit}/${sortBy}`, function (data) {
+        console.log(data);
+        // Initialize a variable for storing the JSON data from AJAX
+        let subreddit_data = data;
+        // Display the result to the frontend
+        displayResult(subreddit_data, subreddit, sortBy);
+      });
+    }
   }
-})
+}
 
-function displayResult(data, subreddit) {
+
+function displayResult(data, subreddit, sortBy) {
   var resultDiv = document.getElementById(subreddit);
+  resultDiv.className = '';
+  resultDiv.className += sortBy;
+  resultDiv.innerHTML = '';
 
   // Remove the Spinner
   $(".spinner").remove();
