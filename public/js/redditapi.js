@@ -11,7 +11,7 @@ module.exports = {
   },
   calculator_search: function (subreddit) {
     return fetch(
-      `https://www.reddit.com/r/${subreddit}/search.json?q=calculator&sort=hot&restrict_sr=on&limit=50&t=week`
+      `https://www.reddit.com/r/${subreddit}/search.json?q=calculator&sort=new&restrict_sr=on&limit=50&t=month`
     )
       .then(res => res.json())
       .then(data => data.data.children.map(post_thread => post_thread.data))
