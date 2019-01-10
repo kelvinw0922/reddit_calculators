@@ -25,6 +25,7 @@
   {{> _header}}
   <main class="bg-color">
     <div class="container">
+      {{> _floatingButton}}
       {{{body}}}
     </div>
   </main>
@@ -37,8 +38,14 @@
     $(document).ready(function () {
       $('.sidenav').sidenav();
     });
+    $(document).ready(function () {
+      $('.fixed-action-btn').floatingActionButton({
+        direction: 'left'
+      });
+    });
   </script>
   <script type="module" src="/js/displayResults.js"></script>
+  <script type="module" src="/js/sortingButton.js"></script>
 </body>
 
 </html>

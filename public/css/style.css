@@ -38,3 +38,7 @@ main.bg-color {
 .notFound {
   margin-bottom: 50px;
 }
+
+.fixed-action-btn {
+  bottom: 87vh;
+}
