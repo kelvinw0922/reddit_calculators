@@ -50,7 +50,12 @@ module.exports = {
     if (sortBy === 'new') {
       let urls = [];
       for (let i = 0; i < list.length; i++) {
-        urls.push(`https://www.reddit.com/r/${list[i]}/new/.json?sort=new&t=week&limit=20`);
+        if (list[i] === 'calculators' || list[i] === 'GraphingCalculator') {
+          urls.push(`https://www.reddit.com/r/${list[i]}/new/.json?sort=new&t=week&limit=20`);
+        }
+        else {
+          urls.push(`https://www.reddit.com/r/${list[i]}/search.json?q=calculator&sort=new&restrict_sr=on&limit=50&t=month`);
+        }
       }
       return Promise.all(urls.map(fetch)).then(responses =>
         Promise.all(responses.map(res => res.json())
