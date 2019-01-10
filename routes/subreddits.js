@@ -4,6 +4,22 @@ const { search, calculator_search } = require("../public/js/redditapi");
 const path = require("path");
 
 // Subreddits Pages
+const subredditsList = [
+  'calculators',
+  'GraphingCalculator',
+  'learnmath',
+  'math',
+  'matheducation'
+];
+
+// All
+router.get("/all", (req, res) => {
+  res.render("subreddits/subreddit", {
+    all: true,
+    subreddit: subredditName,
+    title: "r/all"
+  });
+});
 
 // Calculator
 router.get("/calculators", (req, res) => {
