@@ -35,8 +35,63 @@ function displayResult(data, subreddit) {
     resultDiv.insertAdjacentHTML("beforeend", errorNotFound);
   }
   else {
-    for (let i = 0; i < data.length; i++) {
-      displayCard(data[i], resultDiv);
+    // Initial Loading
+    let initLoad = false;
+    let theEnd = false;
+    const limit = 3;
+    let offset = 0;
+    let array_length = data.length;
+    // Check if the length of the array is fewer than the limit
+    if (limit >= array_length) {
+      for (let i = 0; i < data.length; i++) {
+        // console.log('1.a');
+        displayCard(data[i], resultDiv);
+      }
+      initLoad = true;
+      theEnd = true;
+    }
+    // The length of the array is more than the limit (async)
+    else {
+      // Create card from the beginning to the limit
+      for (let i = 0; i < limit; i++) {
+        // console.log('1.b');
+        displayCard(data[i], resultDiv);
+      }
+      // Set offset to the limit
+      offset += limit;
+      // Set initLoad = true
+      initLoad = true;
+
+      // Checking Scrolling
+      if (!theEnd) {
+        $(window).scroll(function () {
+          let position = $(window).scrollTop();
+          let bottom = $(document).height() - $(window).height();
+
+          if (position === bottom && !theEnd && initLoad) {
+            // Check if the length of the array is fewer than the limit
+            if (offset + limit >= data.length) {
+              // Create card from offset to the end of the array
+              for (let i = offset; i < data.length; i++) {
+                // console.log('2');
+                displayCard(data[i], resultDiv);
+              }
+              // Set theEnd = true
+              theEnd = true;
+            }
+            // The length of the array is more than the offset+limit
+            else {
+              // Create card from offset index to offset+limit
+              for (let i = offset; i < offset + limit; i++) {
+                // console.log('3');
+                displayCard(data[i], resultDiv);
+              }
+              // Set offset to offset+limit
+              offset += limit;
+            }
+          }
+        })
+      }
     }
   }
 
