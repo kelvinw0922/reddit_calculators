@@ -2,14 +2,21 @@ import helperFn from './parseThumbnail.js';
 import truncate from './truncate.js';
 
 export default {
-  queryReddit: function (sortBy) {
+  queryReddit: function(sortBy) {
     // Retrieve Subreddit's name
     let subreddit = window.location.pathname.split('/').pop();
 
     // Check if subreddit is within the range of subreddits we actively look for
-    if (subreddit === 'all' || subreddit === 'calculators' || subreddit === 'GraphingCalculator' || subreddit === 'learnmath' || subreddit === 'math' || subreddit === 'matheducation') {
+    if (
+      subreddit === 'all' ||
+      subreddit === 'calculators' ||
+      subreddit === 'GraphingCalculator' ||
+      subreddit === 'learnmath' ||
+      subreddit === 'math' ||
+      subreddit === 'matheducation'
+    ) {
       // Send an AJAX request to the backend, redditapi, to query data
-      $.get(`result/${subreddit}/${sortBy}`, function (data) {
+      $.get(`result/${subreddit}/${sortBy}`, function(data) {
         // Organize data if it's all subreddit
         let subreddit_data = [];
         if (subreddit === 'all') {
@@ -19,28 +26,25 @@ export default {
           }
           // Sort the array
           if (sortBy === 'new') {
-            subreddit_data = subreddit_data.sort(function (a, b) {
+            subreddit_data = subreddit_data.sort(function(a, b) {
               return new Date(b.created_utc * 1000) - new Date(a.created_utc * 1000);
-            })
-          }
-          else if (sortBy === 'top') {
-            subreddit_data = subreddit_data.sort(function (a, b) {
+            });
+          } else if (sortBy === 'top') {
+            subreddit_data = subreddit_data.sort(function(a, b) {
               return b.score - a.score;
-            })
+            });
           }
-        }
-        else {
+        } else {
           // Initialize a variable for storing the JSON data from AJAX
           subreddit_data = data;
         }
-        console.log(subreddit_data);
-        // // Display the result to the frontend
+        // console.log(subreddit_data);
+        // Display the result to the frontend
         displayResult(subreddit_data, subreddit, sortBy);
       });
     }
-  }
-}
-
+  },
+};
 
 function displayResult(data, subreddit, sortBy) {
   var resultDiv = document.getElementById(subreddit);
@@ -49,7 +53,7 @@ function displayResult(data, subreddit, sortBy) {
   resultDiv.innerHTML = '';
 
   // Remove the Spinner
-  $(".spinner").remove();
+  $('.spinner').remove();
 
   // Check if there is any data
   if (data.length === 0) {
@@ -57,10 +61,9 @@ function displayResult(data, subreddit, sortBy) {
       <div class="notFound">
         <img src="/img/oops-nothing-found-here.jpg" style="display: block; margin: 0 auto;">
       </div>
-    `
-    resultDiv.insertAdjacentHTML("beforeend", errorNotFound);
-  }
-  else {
+    `;
+    resultDiv.insertAdjacentHTML('beforeend', errorNotFound);
+  } else {
     // Initial Loading
     let initLoad = false;
     let theEnd = false;
@@ -90,7 +93,7 @@ function displayResult(data, subreddit, sortBy) {
 
       // Checking Scrolling
       if (!theEnd) {
-        $(window).scroll(function () {
+        $(window).scroll(function() {
           let position = $(window).scrollTop();
           let bottom = $(document).height() - $(window).height();
 
@@ -116,16 +119,15 @@ function displayResult(data, subreddit, sortBy) {
               offset += limit;
             }
           }
-        })
+        });
       }
     }
   }
-
 }
 
 // Redirecting the correct URL to the thread
 function directToReadMore(post) {
-  let newURL = "http://www.reddit.com" + post.permalink;
+  let newURL = 'http://www.reddit.com' + post.permalink;
   return newURL;
 }
 
@@ -142,7 +144,7 @@ function diff_hours(dt1) {
     return `Submitted ${result} hours ago`;
   } else {
     if (Math.abs(Math.floor(result / 24)) === 1) {
-      return "Submitted 1 day ago";
+      return 'Submitted 1 day ago';
     } else {
       return `Submitted ${Math.abs(Math.floor(result / 24))} days ago`;
     }
@@ -157,7 +159,8 @@ function getSubmissionTime(post_utc) {
 
 // Creating one card object for one post, then add it to its corresponding div
 function displayCard(data, resultDiv) {
-  let thumbnail = null; let selftext = null;
+  let thumbnail = null;
+  let selftext = null;
 
   // Check if thumbnail is available. If yes, display it. If no, parse the title to see if there's any major brand or calculator. If yes, display the icon. If no, display          default picture.
   thumbnail = helperFn.parseThumbnail(data.title, data.thumbnail);
@@ -177,15 +180,17 @@ function displayCard(data, resultDiv) {
             <div class="card-stacked">
                 <div class="card-content">
                 <h5><a href="${directToReadMore(
-    data
-  )}" target="_blank" class="default-title"><span style='font-style: italic'>${resultDiv.id === 'all' ? '[' + data.subreddit + '] ' : ''}</span>${data.title}</a></h5>
-    <p>${selftext ? selftext : ""}</p>
+                  data,
+                )}" target="_blank" class="default-title"><span style='font-style: italic'>${
+    resultDiv.id === 'all' ? '[' + data.subreddit + '] ' : ''
+  }</span>${data.title}</a></h5>
+    <p>${selftext ? selftext : ''}</p>
                 </div>
                 <div class="card-action">
                   <span class="badge">Score: ${data.score}</span>
-                  <span class="left badge">${getSubmissionTime(
-    data.created_utc
-  )} by ${data.author}</span>
+                  <span class="left badge">${getSubmissionTime(data.created_utc)} by ${
+    data.author
+  }</span>
                 </div>
             </div>
         </div>
@@ -193,5 +198,5 @@ function displayCard(data, resultDiv) {
   `;
 
   // Append each post to the result class's div
-  resultDiv.insertAdjacentHTML("beforeend", newPost);
+  resultDiv.insertAdjacentHTML('beforeend', newPost);
 }
