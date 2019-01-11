@@ -178,7 +178,7 @@ function displayCard(data, resultDiv) {
                 <div class="card-content">
                 <h5><a href="${directToReadMore(
     data
-  )}" target="_blank" class="default-title">${data.title}</a></h5>
+  )}" target="_blank" class="default-title"><span style='font-style: italic'>${resultDiv.id === 'all' ? '[' + data.subreddit + '] ' : ''}</span>${data.title}</a></h5>
     <p>${selftext ? selftext : ""}</p>
                 </div>
                 <div class="card-action">
