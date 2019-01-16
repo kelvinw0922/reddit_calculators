@@ -38,7 +38,7 @@ export default {
           // Initialize a variable for storing the JSON data from AJAX
           subreddit_data = data;
         }
-        // console.log(subreddit_data);
+        console.log(subreddit_data);
         // Display the result to the frontend
         displayResult(subreddit_data, subreddit, sortBy);
       });
@@ -73,7 +73,7 @@ function displayResult(data, subreddit, sortBy) {
     // Check if the length of the array is fewer than the limit
     if (limit >= array_length) {
       for (let i = 0; i < data.length; i++) {
-        // console.log('1.a');
+        console.log('1.a');
         displayCard(data[i], resultDiv);
       }
       initLoad = true;
@@ -83,7 +83,7 @@ function displayResult(data, subreddit, sortBy) {
     else {
       // Create card from the beginning to the limit
       for (let i = 0; i < limit; i++) {
-        // console.log('1.b');
+        console.log('1.b');
         displayCard(data[i], resultDiv);
       }
       // Set offset to the limit
@@ -95,14 +95,13 @@ function displayResult(data, subreddit, sortBy) {
       if (!theEnd) {
         $(window).scroll(function() {
           let position = $(window).scrollTop();
-          let bottom = $(document).height() - $(window).height();
-
-          if (position === bottom && !theEnd && initLoad) {
+          let bottom = $(document).height() - $(window).height() - 50;
+          if (position >= bottom && !theEnd && initLoad) {
             // Check if the length of the array is fewer than the limit
             if (offset + limit >= data.length) {
               // Create card from offset to the end of the array
               for (let i = offset; i < data.length; i++) {
-                // console.log('2');
+                console.log('2');
                 displayCard(data[i], resultDiv);
               }
               // Set theEnd = true
@@ -112,7 +111,7 @@ function displayResult(data, subreddit, sortBy) {
             else {
               // Create card from offset index to offset+limit
               for (let i = offset; i < offset + limit; i++) {
-                // console.log('3');
+                console.log('3');
                 displayCard(data[i], resultDiv);
               }
               // Set offset to offset+limit
